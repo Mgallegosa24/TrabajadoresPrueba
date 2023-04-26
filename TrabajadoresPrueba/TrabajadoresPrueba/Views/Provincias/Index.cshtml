@@ -1,0 +1,44 @@
+﻿@model IEnumerable<TrabajadoresPrueba.Modelos.Provincia>
+
+@{
+    var parametroDepartamento = (TrabajadoresPrueba.Modelos.Departamento)ViewBag.Departamento;
+}
+
+<div class="mail-box">
+
+    <h3>Departamento: @parametroDepartamento.NombreDepartamento</h3>
+    <h2>Provincias</h2>
+
+    <p>
+        <a asp-action="Create" asp-route-idDepartamento="@parametroDepartamento.Id" class="btn btn-primary info-dialog-window">Nuevo Registro</a>
+    </p>
+    <div class="table-responsive table-sm table-hover">
+
+        <table id="example" class="table table-hover table-mail">
+            <thead class="table-active">
+                <tr>
+                    <th>
+                        Nombre de Provincias
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombreProvincia)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning infoObser-dialog-window">Editar</a>
+                            <a data-id="@item.Id" class="btn btn-danger delete-dialog-window">Eliminar</a>
+                            <a asp-controller="Distritos" asp-action="Index" asp-route-id="@item.Id" class="btn btn-info">Distritos</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-controller="Departamentos" class="btn btn-dark" asp-action="Index">Regresar a la lista</a>
+    </div>
+</div>
