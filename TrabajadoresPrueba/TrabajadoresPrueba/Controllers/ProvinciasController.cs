@@ -22,7 +22,7 @@ namespace TrabajadoresPrueba.Controllers
         public IActionResult Create(int idDepartamento)
         {
             var provincia = new Provincia { IdDepartamento = idDepartamento };
-            return View();
+            return View(provincia);
         }
 
         [HttpPost]
@@ -31,6 +31,36 @@ namespace TrabajadoresPrueba.Controllers
             await _context.Provincia.AddAsync(Model);   //Insert into
             await _context.SaveChangesAsync();     //Commit a la bd
             return RedirectToAction("Index", new {id = Model.IdDepartamento});
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var provincia = await _context.Provincia.FindAsync(id);
+            return View(provincia);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Provincia Model)
+        {
+            var provinciaOld = await _context.Provincia.FindAsync(Model.Id);
+            provinciaOld.NombreProvincia = Model.NombreProvincia;
+            _context.Update(provinciaOld);
+            await _context.SaveChangesAsync();     //Commit a la bd
+            return RedirectToAction("Index", new { id = Model.IdDepartamento });
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var idDepartamento = 0;
+            var provincia = await _context.Provincia.FindAsync(id);
+
+            if (provincia != null) {
+                idDepartamento = provincia.IdDepartamento;
+                _context.Remove(provincia);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", new { id = idDepartamento });
+
         }
     }
 }

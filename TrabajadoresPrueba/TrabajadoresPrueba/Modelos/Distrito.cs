@@ -8,7 +8,7 @@ namespace TrabajadoresPrueba.Modelos
         public int Id { get; set; }
         [Required]
         [DisplayName("Distrito")]
-        public string NombreDistrito { get; set; }
+        public string NombreDistrito { get; set; } = string.Empty;
         public int IdProvincia { get; set; }
     }
 }
